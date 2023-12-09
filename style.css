@@ -1,61 +1,64 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #212121;
-    color: #1DB954;
-    margin: 0;
-    padding: 0;
+  background-color: #e8f5e9;
 }
 
-#container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0px 0px 5px #ccc;
+.artist {
+  display: inline-block;
+  padding: 10px;
 }
 
-h1 {
-    text-align: center;
+img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
-#avatarButton {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: none;
-    background: none;
+h4 {
+  margin-top: 0px;
 }
 
-#avatarButton:hover #displayName {
-    display: block;
+.track {
+  display: inline-block;
+  padding: 10px;
 }
 
-#displayName {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #fff;
-    color: #000;
-    padding: 5px;
-    border-radius: 5px;
+.sidebar {
+  min-width: 250px;
 }
 
-#avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+#title {
+  margin-bottom: 0px;
 }
 
-#id {
-    font-size: 0.8em;
+#results-container {
+  text-align: center;
 }
 
-#topArtists {
-    margin-top: 20px;
+.item {
+  text-align: center;
 }
 
-#topArtists li {
-    list-style-type: none;
-    padding: 5px;
-    border-bottom: 1px solid #eee;
+.hidden {
+  display: none;
+}
+
+#logo-img {
+  height: 50px;
+  margin: auto;
+  display: block;
+} 
+
+@media only screen and (max-width: 991px) and (min-width: 768px) {
+  img {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  img {
+    width: 200px;
+    height: 200px;
+  }
 }

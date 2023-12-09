@@ -1,23 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Profile</title>
-    <link rel="stylesheet" href="style.css">
+  <!-- Metadatas -->
+  <title>Perfect Playlist</title>
+  <meta name="viewport" content="width=device-width" initial-scale=1>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <!-- JQuery -->
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"
+  ></script>
 </head>
 <body>
-    <h1>Perfect Playlist</h1>
-    <div id="profile">
-      <button id="avatarButton">
-        <img id="avatar" src="" alt="Profile avatar">
-        <span id="displayName"></span>
-      </button>
-      <p id="id"></p>
-    </div>
-    <h2>Top Artists</h2>
-    <ul id="topArtists"></ul>
-    
-    <script type="module" src="src/script.ts"></script>
-</body>
+  <br>
+  <div class="ui doubling stackable grid container">
+     <div class="one wide column centered sidebar">
+        <div class="ui segments centered">
+           <div class ="ui padded segment" id="logo">
+              <img src="src/logo.png" alt="logo" id="logo-img">
+           </div>
+           <div class="ui padded segment" id="login">
+              <button class="ui black fluid button" id="login-button" onclick="authorize()">Login</button>
+           </div>
+           <div class="ui padded segment" id="button-segment">
+              <button class="ui black fluid button" id="artist-button" onclick="getTopArtists()">Artists</button>
+              <br>
+              <button class="ui black fluid button" id="track-button" onclick="getTopTracks()">Tracks</button>
+           </div>
+           <div class="ui padded segment" id="timeForm">
+              <div class="ui form">
+                 <div class="grid" id="timeEntry">
+                    <p>Time:</p>
+                    <div class="field">
+                       <div class="ui radio checkbox">
+                          <input type="radio" name="time" value="short_term" checked="checked">
+                          <label>Last 4 weeks</label>
+                       </div>
+                    </div>
+                    <div class="field">
+                       <div class="ui radio checkbox">
+                          <input type="radio" name="time" value="medium_term">
+                          <label>Last 6 months</label>
+                       </div>
+                    </div>
+                    <div class="field">
+                       <div class="ui radio checkbox">
+                          <input type="radio" name="time" value="long_term">
+                          <label>All time</label>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+           <div class="ui padded segment form" id="numForm">
+              <p id="number">Number of results: 20</p>
+              <input type="range" min="1" max="50" value="20" class="slider" id="numResponses">
+           </div>
+        </div>
+     </div>
+     <div class="twelve wide column centered">
+        <br>
+        <div class="ui eight column centered" id="results-container">
+           <div id="results-header"></div>
+           <br>
+           <div class="ui stackable five column grid container content" id="results"></div>
+        </div>
+     </div>
+  </div>
+  <script src="src/script.js"></script>
 </html>

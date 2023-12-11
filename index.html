@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Metadatas -->
+
   <title>Perfect Playlist</title>
   <meta name="viewport" content="width=device-width" initial-scale=1>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="src/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <!-- JQuery -->
+
   <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -23,12 +23,14 @@
               <img src="src/logo.png" alt="logo" id="logo-img">
            </div>
            <div class="ui padded segment" id="login">
-              <button class="ui black fluid button" id="login-button" onclick="authorize()">Login</button>
+              <button class="ui fluid button" id="login-button" onclick="authorize()">Login</button>
            </div>
            <div class="ui padded segment" id="button-segment">
-              <button class="ui black fluid button" id="artist-button" onclick="getTopArtists()">Artists</button>
+              <button class="ui fluid button" id="artist-button" onclick="getTopArtists()">Artists</button>
               <br>
-              <button class="ui black fluid button" id="track-button" onclick="getTopTracks()">Tracks</button>
+              <button class="ui fluid button" id="track-button" onclick="getTopTracks()">Tracks</button>
+              <br>
+              <button class="ui fluid button" id="create-playlist-button" onclick="createPlaylist()">Create Playlist</button>
            </div>
            <div class="ui padded segment" id="timeForm">
               <div class="ui form">

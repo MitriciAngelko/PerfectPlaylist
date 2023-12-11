@@ -1,5 +1,5 @@
 body {
-  background-color: #e8f5e9;
+  background-color: #212121;
 }
 
 .artist {
@@ -48,6 +48,36 @@ h4 {
   margin: auto;
   display: block;
 } 
+
+.ui.padded.segment {
+  background-color:#121212;
+}
+
+.one.wide.column.centered.sidebar
+{
+  position: fixed;
+  top: 10%;
+  left: 30px;
+}
+.ui.fluid.button {
+  background-color:#1db954;
+  color:#212121;
+}
+
+.ui.form {
+  color:#1db954;
+}
+
+h2,h4 {
+  color:#1db954;
+}
+
+#timeEntry div.field div.ui.radio.checkbox label::before,
+#timeEntry div.field div.ui.checkbox label::before,
+#timeEntry div.field div.ui.radio.checkbox input[type="radio"] + label,
+#timeEntry div.field div.ui.checkbox input[type="checkbox"] + label {
+    color: #1db954 !important;
+}
 
 @media only screen and (max-width: 991px) and (min-width: 768px) {
   img {

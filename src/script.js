@@ -22,6 +22,7 @@ date = date.join('/');
   url += '&scope=' + encodeURIComponent(scopes);
   url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
   window.location = url;
+
 }
 
 function getHashValue(key) {
@@ -149,8 +150,8 @@ function getTopTracks() {
             playlist_uris.push(item.uri);
             let trackName = item.name;
             let artistName = item.artists[0].name;
-            let url = item.external_urls.spotify;
-            let image = item.album.images[1].url;
+            let url = item.external_urls ? item.external_urls.spotify : '';
+            let image = item.album.images[1] ? item.album.images[1].url : '';
             resultsHtml += '<div class="column wide track item"><a href="' + url + '" target="_blank"><img src="' + image + '"></a><h4>' + (i + 1) + '. ' + trackName + ' <br>' + artistName + ' </h4></div>';
           });
         }
@@ -216,6 +217,83 @@ function disableControls() {
   $('#timeForm').addClass("disabled");
   $('#numForm').addClass("disabled");
 }
+
+// function createPlaylist() {
+//   if (access_token) {
+//     $.ajax({
+//       url: 'https://api.spotify.com/v1/users/' + user_id + '/playlists',
+//       method: 'POST',
+//       data: JSON.stringify({
+//         name: 'Top Tracks ' + time_range_display,
+//         public: false,
+//       }),
+//       headers: {
+//         'Authorization': 'Bearer ' + access_token,
+//         'Content-Type': 'application/json',
+//       },
+//       success: function(response) {
+//         addTracks(response.id);
+//       },
+//       error: function(jqXHR, textStatus, errorThrown) {
+//         ifError(jqXHR.status);
+//       },
+//     });
+//   }
+// } 
+
+// function addTracks(playlist_id) {
+//   if (access_token) {
+//     $.ajax({
+//       url: 'https://api.spotify.com/v1/users/' + user_id + '/playlists/' + playlist_id + '/tracks',
+//       method: 'POST',
+//       data: JSON.stringify({
+//         uris: playlist_uris,
+//       }),
+//       headers: {
+//         'Authorization': 'Bearer ' + access_token,
+//         'Content-Type': 'application/json',
+//       },
+//       success: function(response) {
+//         $('#results').html('<p>Playlist created successfully.</p>');
+//       },
+//       error: function(jqXHR, textStatus, errorThrown) {
+//         ifError(jqXHR.status);
+//       },
+//     });
+//   }
+// }
+
+// Function to create a playlist
+// async function createPlaylist() {
+//   try {
+//       // Create the playlist
+//       const response = await fetch('https://api.spotify.com/v1/users/' + user_id + '/playlists', {
+//           method: 'POST',
+//           headers: {
+//               'Accept': 'application/json',
+//               'Content-Type': 'application/json',
+//               'Authorization': `Bearer ${token}`,
+//           },
+//           body: JSON.stringify({
+//               name: name,
+//               description: "Playlist generated using singlespotify by Kabir Virji",
+//               public: true
+//           }),
+//       });
+
+//       if (!response.ok) {
+//           throw new Error(`HTTP error! Status: ${response.status}`);
+//       }
+
+//       return await response.json();
+//   } catch (error) {
+//       console.error('Error creating playlist:', error.message);
+//       throw error;
+//   }
+// };
+// window.createPlaylist = createPlaylist;
+
+
 
 function initialize() {
   $('#timeForm input').on('change', function() {

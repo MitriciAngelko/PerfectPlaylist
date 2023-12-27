@@ -53,6 +53,21 @@ h4 {
   background-color:#121212;
 }
 
+#sidebarDreapta  {
+  position: fixed;
+  top: 80px;
+  left: 1200px;
+  width: 220px;
+  height: 100%;
+  color:#1db954;
+}
+
+
+#profile-picture img{
+  width: 180px;
+  height: 170px;
+}
+
 .one.wide.column.centered.sidebar
 {
   position: fixed;

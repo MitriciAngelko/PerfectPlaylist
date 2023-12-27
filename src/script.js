@@ -76,6 +76,14 @@ function getUserId() {
       },
       success: function(response) {
         user_id = response.id;
+        const userProfileImages = response.images;
+        const displayName = response.display_name;
+        $('#user-name').text(displayName);
+        if (userProfileImages && userProfileImages.length > 0) {
+          const userProfilePictureUrl = userProfileImages[0].url;
+          $('#user-profile-pic').attr('src', userProfilePictureUrl);
+        }
+
       },
       error: (jqXHR, textStatus, errorThrown) => {
         ifError(jqXHR.status);
@@ -218,82 +226,139 @@ function disableControls() {
   $('#numForm').addClass("disabled");
 }
 
-// function createPlaylist() {
-//   if (access_token) {
-//     $.ajax({
-//       url: 'https://api.spotify.com/v1/users/' + user_id + '/playlists',
-//       method: 'POST',
-//       data: JSON.stringify({
-//         name: 'Top Tracks ' + time_range_display,
-//         public: false,
-//       }),
-//       headers: {
-//         'Authorization': 'Bearer ' + access_token,
-//         'Content-Type': 'application/json',
-//       },
-//       success: function(response) {
-//         addTracks(response.id);
-//       },
-//       error: function(jqXHR, textStatus, errorThrown) {
-//         ifError(jqXHR.status);
-//       },
-//     });
-//   }
-// } 
+function currentlyPlaying() {
+  if(access_token){
+    console.log("success");
+  setInterval(async () => {
+    try {
+      const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+        headers: {
+          'Authorization': `Bearer ${access_token}`,
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      if (data.is_playing) {
+        const songName = data.item.name;
+        const artistName = data.item.artists[0].name;
+        console.log(`Currently playing: ${songName} by ${artistName}`);
+        $('#currently-playing').text(`Currently playing: ${songName} by ${artistName}`);
+      } else {
+        console.log('No song currently playing');
+        $('#currently-playing').text('No song currently playing');
+      }
+    } catch (error) {
+      console.error('Error getting currently playing song:', error.message);
+      throw error;
+    }
+  }, 5000);
+}
+}
 
-// function addTracks(playlist_id) {
-//   if (access_token) {
-//     $.ajax({
-//       url: 'https://api.spotify.com/v1/users/' + user_id + '/playlists/' + playlist_id + '/tracks',
-//       method: 'POST',
-//       data: JSON.stringify({
-//         uris: playlist_uris,
-//       }),
-//       headers: {
-//         'Authorization': 'Bearer ' + access_token,
-//         'Content-Type': 'application/json',
-//       },
-//       success: function(response) {
-//         $('#results').html('<p>Playlist created successfully.</p>');
-//       },
-//       error: function(jqXHR, textStatus, errorThrown) {
-//         ifError(jqXHR.status);
-//       },
-//     });
-//   }
-// }
+async function createPlaylist() {
+  console.log(access_token);
+  if(access_token){
+    try {
+      let timeRange;
+      let timeRangeText;
+      if (document.querySelector('#last-4-weeks').checked) {
+        timeRange = 'short_term';
+        timeRangeText = 'Last 4 Weeks';
+      } else if (document.querySelector('#last-6-months').checked) {
+        timeRange = 'medium_term';
+        timeRangeText = 'Last 6 Months';
+      } else if (document.querySelector('#all-time').checked) {
+        timeRange = 'long_term';
+        timeRangeText = 'All Time';
+      }
 
-// Function to create a playlist
-// async function createPlaylist() {
-//   try {
-//       // Create the playlist
-//       const response = await fetch('https://api.spotify.com/v1/users/' + user_id + '/playlists', {
-//           method: 'POST',
-//           headers: {
-//               'Accept': 'application/json',
-//               'Content-Type': 'application/json',
-//               'Authorization': `Bearer ${token}`,
-//           },
-//           body: JSON.stringify({
-//               name: name,
-//               description: "Playlist generated using singlespotify by Kabir Virji",
-//               public: true
-//           }),
-//       });
+      const playlistName = `Perfect Playlist - ${timeRangeText}`;
 
-//       if (!response.ok) {
-//           throw new Error(`HTTP error! Status: ${response.status}`);
-//       }
+      const response = await fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${access_token}`,
+        },
+        body: JSON.stringify({
+          name: playlistName,
+          description: "This playlist has been created using PerfectPlaylist.",
+          public: true
+        })
+      });
 
-//       return await response.json();
-//   } catch (error) {
-//       console.error('Error creating playlist:', error.message);
-//       throw error;
-//   }
-// };
-// window.createPlaylist = createPlaylist;
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
+      const data = await response.json();
+      const playlistId = data.id;
+      console.log(playlistId);
 
+      const artistsResponse = await fetch(`https://api.spotify.com/v1/me/top/artists?limit=10&time_range=${timeRange}`, {
+        headers: {
+          'Authorization': `Bearer ${access_token}`,
+        },
+      });
+
+      if (!artistsResponse.ok) {
+        throw new Error(`HTTP error! Status: ${artistsResponse.status}`);
+      }
+
+      const artistsData = await artistsResponse.json();
+      const artistIds = artistsData.items.map(item => item.id);
+
+      const trackUris = [];
+      for (const artistId of artistIds) {
+        const tracksResponse = await fetch(`https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=US`, {
+          headers: {
+            'Authorization': `Bearer ${access_token}`,
+          },
+        });
+
+        if (!tracksResponse.ok) {
+          throw new Error(`HTTP error! Status: ${tracksResponse.status}`);
+        }
+
+        const tracksData = await tracksResponse.json();
+        const topTracks = tracksData.tracks
+          .sort((a, b) => b.popularity - a.popularity)
+          .slice(0, 2)
+          .map(track => track.uri);
+
+        trackUris.push(...topTracks);
+      }
+
+      const addTracksResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${access_token}`,
+        },
+        body: JSON.stringify({
+          uris: trackUris
+        })
+      });
+
+      if (!addTracksResponse.ok) {
+        throw new Error(`HTTP error! Status: ${addTracksResponse.status}`);
+      }
+
+      console.log('Tracks added to playlist');
+    } catch (error) {
+      console.error('Error creating playlist:', error.message);
+      throw error;
+    }
+  }
+}
+
+window.createPlaylist = createPlaylist;
 
 function initialize() {
   $('#timeForm input').on('change', function() {

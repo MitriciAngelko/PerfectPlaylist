@@ -16,6 +16,7 @@
 </head>
 <body>
   <br>
+  <!-- Sidebar stanga -->
   <div class="ui doubling stackable grid container">
      <div class="one wide column centered sidebar">
         <div class="ui segments centered">
@@ -38,19 +39,19 @@
                     <p>Time:</p>
                     <div class="field">
                        <div class="ui radio checkbox">
-                          <input type="radio" name="time" value="short_term" checked="checked">
+                          <input type="radio" id="last-4-weeks" name="time" value="short_term" checked="checked">
                           <label>Last 4 weeks</label>
                        </div>
                     </div>
                     <div class="field">
                        <div class="ui radio checkbox">
-                          <input type="radio" name="time" value="medium_term">
+                          <input type="radio" id="last-6-months" name="time" value="medium_term">
                           <label>Last 6 months</label>
                        </div>
                     </div>
                     <div class="field">
                        <div class="ui radio checkbox">
-                          <input type="radio" name="time" value="long_term">
+                          <input type="radio" id="all-time" name="time" value="long_term">
                           <label>All time</label>
                        </div>
                     </div>
@@ -72,5 +73,22 @@
         </div>
      </div>
   </div>
+  
+  <!-- sidebar dreapta -->
+ <div class="one wide column centered sidebar">
+   <div class="ui segments centered" id="sidebarDreapta">
+      <div class="ui padded segment" id="profile-picture">
+         <img id="user-profile-pic" alt="User Profile Picture">
+      </div>
+      <div class="ui padded segment" id="user-name">
+         <p id="user-name-text"></p>
+      </div>
+      <div class="ui padded segment" id="current-playing-track">
+         <img id="current-album-image" alt="Album Image">
+         <p id="current-track-name"></p>
+         <p id="current-artist-name"></p>
+       </div>
+   </div>
+</div>
   <script src="src/script.js"></script>
 </html>

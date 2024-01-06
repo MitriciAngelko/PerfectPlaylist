@@ -7,6 +7,11 @@ body {
   padding: 10px;
 }
 
+#user-name {
+  font:bolder;
+  text-align: center;
+}
+
 img {
   width: 150px;
   height: 150px;

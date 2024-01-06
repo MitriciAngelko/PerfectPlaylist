@@ -216,6 +216,7 @@ function enableControls() {
   $('#button-segment').removeClass("disabled");
   $('#timeForm').removeClass("disabled");
   $('#numForm').removeClass("disabled");
+  currentlyPlaying();
 }
 
 function disableControls() {
@@ -224,39 +225,6 @@ function disableControls() {
   $('#artist-button').addClass("disabled");
   $('#timeForm').addClass("disabled");
   $('#numForm').addClass("disabled");
-}
-
-function currentlyPlaying() {
-  if(access_token){
-    console.log("success");
-  setInterval(async () => {
-    try {
-      const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
-        headers: {
-          'Authorization': `Bearer ${access_token}`,
-        },
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      if (data.is_playing) {
-        const songName = data.item.name;
-        const artistName = data.item.artists[0].name;
-        console.log(`Currently playing: ${songName} by ${artistName}`);
-        $('#currently-playing').text(`Currently playing: ${songName} by ${artistName}`);
-      } else {
-        console.log('No song currently playing');
-        $('#currently-playing').text('No song currently playing');
-      }
-    } catch (error) {
-      console.error('Error getting currently playing song:', error.message);
-      throw error;
-    }
-  }, 5000);
-}
 }
 
 async function createPlaylist() {

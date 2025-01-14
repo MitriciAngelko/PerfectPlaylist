@@ -1,0 +1,7 @@
+[22:56:39 2024-08-28] FETCHING Version 1.2.1
+[22:56:39 2024-08-28] DOWNLOADING https://github.com/spicetify/cli/releases/download/v1.2.1/spicetify-1.2.1-darwin-arm64.tar.gz
+[22:56:41 2024-08-28] EXTRACTING /Users/angelkomitrici/.spicetify/spicetify.tar.gz
+[22:56:41 2024-08-28] SETTING EXECUTABLE PERMISSIONS TO /Users/angelkomitrici/.spicetify/spicetify
+[22:56:41 2024-08-28] REMOVING /Users/angelkomitrici/.spicetify/spicetify.tar.gz
+[22:56:41 2024-08-28] spicetify v1.2.1 was installed successfully to /Users/angelkomitrici/.spicetify
+[22:56:41 2024-08-28] Run 'spicetify --help' to get started

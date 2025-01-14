@@ -1,0 +1,18 @@
+/* Stiluri pentru playlist */
+.playlist-track {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 8px;
+  padding: 8px;
+  margin: 4px 0;
+  background-color: #164047;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #DDA853;
+}
+
+.playlist-track.active {
+  background-color: #DDA853;
+  transform: translateX(-5px);
+  border: 1px solid #FBF5DD;
+} 

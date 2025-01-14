@@ -1,0 +1,126 @@
+/* Importăm toate componentele CSS */
+@import 'components/sidebar.css';
+@import 'components/playlist.css';
+@import 'components/buttons.css';
+
+/* Stiluri generale */
+body {
+  background-color: #164047;
+  color: #FBF5DD;
+}
+
+/* Adăugăm variabile CSS pentru breakpoint-uri */
+:root {
+  --mobile-breakpoint: 768px;
+  --tablet-breakpoint: 1024px;
+}
+
+/* Resetare pentru body și html */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Layout responsive pentru container-ul principal */
+.ui.grid.container {
+  display: grid;
+  grid-template-columns: 250px 1fr 300px;
+  gap: 0;
+  height: 100vh;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0;
+}
+
+/* Media queries pentru layout responsive */
+@media screen and (max-width: 768px) {
+  .ui.grid.container {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    height: 100vh;
+    width: 250px !important;
+    z-index: 1000;
+    transition: left 0.3s ease;
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .right.sidebar {
+    position: fixed;
+    right: -300px;
+    width: 300px !important;
+    transition: right 0.3s ease;
+  }
+
+  .right.sidebar.active {
+    right: 0;
+  }
+
+  .main-content {
+    height: auto;
+    min-height: 100vh;
+    padding: 10px !important;
+  }
+
+  /* Buton pentru meniu mobil */
+  #mobile-menu-button {
+    display: block;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1001;
+  }
+
+  #mobile-playlist-button {
+    display: block;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1001;
+  }
+}
+
+/* Ajustări pentru grid-uri responsive */
+@media screen and (max-width: 768px) {
+  #playlists-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  #results {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .playlist-item {
+    height: 250px;
+  }
+
+  .playlist-item img {
+    height: 150px !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #playlists-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #results {
+    grid-template-columns: 1fr;
+  }
+} 

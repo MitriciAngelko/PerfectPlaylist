@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Perfect Playlist - Player</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <nav class="mobile-nav">
+        <button class="burger-menu" id="sidebar-toggle">
+            <i class="bars icon"></i>
+        </button>
+        <h3>Perfect Playlist</h3>
+        <button class="burger-menu" id="playlist-toggle">
+            <i class="list icon"></i>
+        </button>
+    </nav>
+
+    <div class="ui grid container">
+        <div class="player-page">
+            <div class="player-header">
+                <a href="../index.html" class="ui green button">
+                    <i class="arrow left icon"></i> Back
+                </a>
+                <h1>Now Playing</h1>
+            </div>
+            
+            <div class="player-content">
+                <div class="current-track-info">
+                    <img id="current-track-img" alt="Current Track">
+                    <h2 id="current-track-name"></h2>
+                    <h3 id="current-track-artist"></h3>
+                    <div class="player-controls">
+                        <button id="shuffle-button" class="ui circular icon button">
+                            <i class="random icon"></i>
+                        </button>
+                        <button id="prev-button" class="ui circular icon button">
+                            <i class="step backward icon"></i>
+                        </button>
+                        <button id="play-pause-button" class="ui circular icon button">
+                            <i class="play icon"></i>
+                        </button>
+                        <button id="next-button" class="ui circular icon button">
+                            <i class="step forward icon"></i>
+                        </button>
+                        <button id="repeat-button" class="ui circular icon button">
+                            <i class="sync icon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="current-playlist">
+                    <h2>Current Playlist</h2>
+                    <div class="ui divided items" id="playlist-tracks">
+                        <!-- Tracks will be inserted here -->
+                    </div>
+                </div>
+
+                <div id="playlists-grid">
+                    <!-- Playlist-urile vor fi inserate aici dinamic -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="player.js"></script>
+</body>
+</html> 

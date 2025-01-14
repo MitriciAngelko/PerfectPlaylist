@@ -1,5 +1,6 @@
 body {
-  background-color: #212121;
+  background-color: #164047;
+  color: #FBF5DD;
 }
 
 .artist {
@@ -16,7 +17,12 @@ img {
   width: 150px;
   height: 150px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
 }
 
 h4 {
@@ -30,6 +36,13 @@ h4 {
 
 .sidebar {
   min-width: 250px;
+  background-color: #164047;
+  border-radius: 0;
+  padding: 15px;
+  margin: 0 !important;
+  box-shadow: 0 4px 6px rgba(22, 64, 71, 0.3);
+  height: 100vh;
+  overflow-y: auto;
 }
 
 #title {
@@ -55,7 +68,10 @@ h4 {
 } 
 
 .ui.padded.segment {
-  background-color:#121212;
+  background-color: #164047;
+  border-radius: 15px;
+  border: none;
+  margin: 10px 0;
 }
 
 #sidebarDreapta  {
@@ -80,8 +96,15 @@ h4 {
   left: 30px;
 }
 .ui.fluid.button {
-  background-color:#1db954;
-  color:#212121;
+  background-color: #A6CDC6 !important;
+  color: #164047 !important;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.ui.fluid.button:hover {
+  background-color: #8fb9b2 !important;
+  transform: translateY(-2px);
 }
 
 .ui.form {
@@ -89,7 +112,8 @@ h4 {
 }
 
 h2,h4 {
-  color:#1db954;
+  color: #C75000;
+  font-weight: 600;
 }
 
 #timeEntry div.field div.ui.radio.checkbox label::before,
@@ -111,4 +135,894 @@ h2,h4 {
     width: 200px;
     height: 200px;
   }
+}
+
+#currently-playing {
+  text-align: center;
+  color: #1db954;
+}
+
+#currently-playing img {
+  width: 150px;
+  height: 150px;
+  margin: 10px auto;
+}
+
+#current-track-name {
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+#current-track-artist {
+  font-style: italic;
+  margin: 5px 0;
+}
+
+.player-controls {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.player-controls .ui.button {
+  background-color: #DDA853 !important;
+  color: #164047 !important;
+}
+
+.player-controls .ui.button:hover {
+  background-color: #c69643 !important;
+}
+
+.player-controls .ui.button i {
+  margin: 0;
+}
+
+.player-page {
+    padding: 2rem;
+    color: #1db954;
+}
+
+.player-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.player-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.current-track-info {
+    text-align: center;
+    padding: 2rem;
+    background: #164047;
+    border-radius: 10px;
+    border: 1px solid #DDA853;
+}
+
+.current-track-info img {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto 2rem;
+}
+
+.current-track-info h2 {
+    font-size: 2rem;
+    margin: 1rem 0;
+    color: #FBF5DD;
+}
+
+.current-track-info h3 {
+    font-size: 1.5rem;
+    color: #b3b3b3;
+    margin-bottom: 2rem;
+}
+
+.current-playlist {
+    background: #121212;
+    padding: 2rem;
+    border-radius: 10px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.playlist-track {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.1s;
+    cursor: pointer;
+}
+
+.playlist-track:hover {
+    background-color: #282828;
+    transform: scale(1.01);
+}
+
+.playlist-track:active {
+    transform: scale(0.99);
+}
+
+.playlist-track.active {
+    background-color: #DDA853;
+    color: #164047;
+}
+
+.playlist-track.active:hover {
+    background-color: #c69643;
+}
+
+.playlist-track img {
+    width: 60px;
+    height: 60px;
+    margin-right: 1rem;
+}
+
+.track-info {
+    flex-grow: 1;
+}
+
+.track-info .title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.track-info .artist {
+    color: #A6CDC6;
+}
+
+@media (max-width: 768px) {
+    .player-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+.player-compact {
+    background-color: #BFBFBA;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 10px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.player-compact .current-track-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.player-compact img {
+    width: 60px;
+    height: 60px;
+}
+
+.player-compact .track-details {
+    flex-grow: 1;
+}
+
+.player-compact .track-details h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.player-compact .track-details p {
+    margin: 0;
+    color: #b3b3b3;
+    font-size: 0.9rem;
+}
+
+.player-compact .player-controls {
+    display: flex;
+    gap: 10px;
+}
+
+#library-view .ui.cards {
+    margin-top: 1rem;
+}
+
+.playlist-card {
+    background-color: #282828 !important;
+    color: white !important;
+    transition: background-color 0.3s !important;
+}
+
+.playlist-card:hover {
+    background-color: #383838 !important;
+    cursor: pointer;
+}
+
+.playlist-card img {
+    width: 100% !important;
+    height: 160px !important;
+    object-fit: cover;
+}
+
+.playlist-card .content {
+    padding: 1rem !important;
+}
+
+.playlist-card .header {
+    color: white !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.playlist-card .meta {
+    color: #b3b3b3 !important;
+}
+
+#playlist-tracks {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.main-content {
+    height: 100vh;
+    overflow-y: auto;
+    padding: 20px !important;
+    margin: 0 !important;
+    background-color: rgba(166, 205, 198, 0.1);
+    border-radius: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: #A6CDC6;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    margin: 10px 0;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #DDA853;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #DDA853;
+    cursor: pointer;
+}
+
+#number {
+    margin-top: 10px;
+    color: #b3b3b3;
+}
+
+.ui.fluid.button.negative {
+    background-color: #621B00;
+    color: white;
+}
+
+.ui.fluid.button.negative:hover {
+    background-color: #945600;
+}
+
+/* Butoane de control pentru player */
+.ui.circular.icon.button {
+  background-color: #621B00;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.ui.circular.icon.button:hover {
+  background-color: #C75000;
+  transform: scale(1.1);
+}
+
+/* Card-uri pentru playlist-uri */
+.ui.card {
+  background-color: #736453;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.ui.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.right.sidebar {
+  position: relative;
+  height: 100vh;
+  background-color: #164047;
+  padding: 15px;
+  margin: 0 !important;
+  border-radius: 0;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(22, 64, 71, 0.3);
+}
+
+#playlist-tracks {
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+.playlist-track {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 8px;
+  padding: 8px;
+  margin: 4px 0;
+  background-color: #164047;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #DDA853;
+}
+
+.playlist-track:hover {
+  background-color: #A6CDC6;
+  transform: translateX(-5px);
+}
+
+.playlist-track img {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 4px;
+}
+
+.track-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.track-info .title {
+  color: #FBF5DD;
+  font-weight: bold;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-info .artist {
+  color: #A6CDC6;
+  font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Scrollbar personalizat pentru playlist */
+#playlist-tracks::-webkit-scrollbar {
+  width: 8px;
+}
+
+#playlist-tracks::-webkit-scrollbar-track {
+  background: #736453;
+  border-radius: 4px;
+}
+
+#playlist-tracks::-webkit-scrollbar-thumb {
+  background: #A69D8D;
+  border-radius: 4px;
+}
+
+#playlist-tracks::-webkit-scrollbar-thumb:hover {
+  background: #6E8C6D;
+}
+
+/* Titlu pentru playlist */
+.right.sidebar h3 {
+  color: #BFBFBA;
+  font-size: 1.4em;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #A69D8D;
+}
+
+.playlist-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  padding: 15px;
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+.playlist-item {
+  background-color: #FBF5DD;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #DDA853;
+}
+
+.playlist-item:hover {
+  background-color: #A6CDC6;
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(22, 64, 71, 0.3);
+}
+
+.playlist-item:hover .playlist-item-info h3 {
+  color: #164047;
+}
+
+.playlist-item:hover .playlist-item-info p {
+  color: #164047;
+}
+
+.playlist-item img {
+  width: 100%;
+  height: 200px !important;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.playlist-item-info {
+  padding: 15px;
+  flex: 1;
+}
+
+.playlist-item-info h3 {
+  margin: 0;
+  color: #FBF5DD;
+  font-size: 1.1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playlist-item-info p {
+  color: #A6CDC6;
+  margin: 5px 0 0;
+  font-size: 0.9em;
+}
+
+/* Scrollbar pentru grid-ul de playlist-uri */
+#playlists-grid::-webkit-scrollbar {
+  width: 5px;
+}
+
+#playlists-grid::-webkit-scrollbar-track {
+  background: #736453;
+  border-radius: 3px;
+}
+
+#playlists-grid::-webkit-scrollbar-thumb {
+  background: #A69D8D;
+  border-radius: 3px;
+}
+
+#playlists-grid::-webkit-scrollbar-thumb:hover {
+  background: #6E8C6D;
+}
+
+/* Layout principal */
+.ui.grid.container {
+  display: grid;
+  grid-template-columns: 250px 1fr 300px;
+  gap: 0;
+  height: 100vh;
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Resetare pentru body și html */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Ajustare pentru conținutul principal */
+.main-content {
+  height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding: 20px !important;
+  margin: 0 !important;
+  background-color: rgba(166, 205, 198, 0.1);
+  border-radius: 15px;
+}
+
+/* Grid pentru playlist-uri - 3 pe rând și mai mici */
+#results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  padding: 15px;
+}
+
+.artist, .track {
+  width: 100%;
+}
+
+.artist img, .track img {
+  width: 120px !important;
+  height: 120px !important;
+}
+
+/* Sidebar dreapta - Current Playlist */
+.right.sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 300px !important;
+  height: 100vh;
+  background-color: #164047;
+  padding: 15px;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(22, 64, 71, 0.3);
+}
+
+/* Playlist tracks în sidebar */
+.playlist-track {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 8px;
+  padding: 8px;
+  margin: 4px 0;
+  background-color: #164047;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #DDA853;
+}
+
+.playlist-track img {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 4px;
+}
+
+/* Eliminăm stilizarea pentru scrollbar */
+.sidebar::-webkit-scrollbar,
+.main-content::-webkit-scrollbar,
+.right.sidebar::-webkit-scrollbar {
+  display: none;  /* Ascunde scrollbar-ul */
+}
+
+/* Adăugăm suport pentru Firefox */
+.sidebar,
+.main-content,
+.right.sidebar {
+  scrollbar-width: none;  /* Pentru Firefox */
+  -ms-overflow-style: none;  /* Pentru IE și Edge */
+}
+
+/* Ajustări pentru conținutul principal */
+#results-container {
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+  margin-top: 20px;
+}
+
+/* Grid pentru playlist-uri - 4 coloane mai late */
+#playlists-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+  height: calc(100vh - 150px);
+  overflow-y: auto;
+}
+
+/* Card pentru playlist */
+.playlist-item {
+  background-color: #164047;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #DDA853;
+}
+
+.playlist-item:hover {
+  background-color: #A6CDC6;
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(22, 64, 71, 0.3);
+}
+
+.playlist-item:hover .playlist-item-info h3 {
+  color: #164047;
+}
+
+.playlist-item:hover .playlist-item-info p {
+  color: #164047;
+}
+
+.playlist-item img {
+  width: 100%;
+  height: 200px !important;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.playlist-item-info {
+  padding: 15px;
+  flex: 1;
+}
+
+.playlist-item-info h3 {
+  margin: 0;
+  color: #FBF5DD;
+  font-size: 1.1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playlist-item-info p {
+  color: #A6CDC6;
+  margin: 5px 0 0;
+  font-size: 0.9em;
+}
+
+/* Scrollbar pentru grid-ul de playlist-uri */
+#playlists-grid::-webkit-scrollbar {
+  width: 5px;
+}
+
+#playlists-grid::-webkit-scrollbar-track {
+  background: #736453;
+  border-radius: 3px;
+}
+
+#playlists-grid::-webkit-scrollbar-thumb {
+  background: #A69D8D;
+  border-radius: 3px;
+}
+
+#playlists-grid::-webkit-scrollbar-thumb:hover {
+  background: #6E8C6D;
+}
+
+/* Ajustare pentru track activ */
+.playlist-track.active {
+  background-color: #DDA853;
+  transform: translateX(-5px);
+  border: 1px solid #FBF5DD;
+}
+
+.playlist-track.active .track-info .title,
+.playlist-track.active .track-info .artist {
+  color: #164047;
+}
+
+.playlist-track:hover {
+  background-color: #A6CDC6;
+  transform: translateX(-5px);
+}
+
+.playlist-track:hover .track-info .title,
+.playlist-track:hover .track-info .artist {
+  color: #164047;
+}
+
+/* Adăugăm variabile pentru breakpoint-uri */
+:root {
+  --mobile-breakpoint: 768px;
+  --small-mobile-breakpoint: 480px;
+}
+
+/* Stiluri pentru meniul burger și navigare mobilă */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #164047;
+  padding: 10px;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.burger-menu {
+  display: none;
+  font-size: 24px;
+  color: #FBF5DD;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+/* Media queries pentru mobile */
+@media screen and (max-width: 768px) {
+  /* Resetăm overflow pentru body pe mobile */
+  body, html {
+    overflow: auto;
+    height: auto;
+  }
+
+  /* Ajustăm container-ul principal */
+  .ui.grid.container {
+    display: block;
+    padding-top: 60px; /* Pentru a face loc meniului fix */
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Stilizăm meniul mobil */
+  .mobile-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #164047;
+    padding: 10px 20px;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  /* Ajustăm sidebar-urile pentru mobile */
+  .sidebar {
+    position: fixed;
+    left: -100%;
+    top: 60px; /* Sub meniul fix */
+    width: 80% !important;
+    height: calc(100vh - 60px);
+    background-color: #164047;
+    z-index: 999;
+    transition: left 0.3s ease;
+    padding: 20px;
+  }
+
+  .right.sidebar {
+    position: fixed;
+    right: -100%;
+    top: 60px;
+    width: 80% !important;
+    height: calc(100vh - 60px);
+    transition: right 0.3s ease;
+    padding: 20px;
+  }
+
+  /* Ajustăm conținutul principal */
+  .main-content {
+    height: auto !important;
+    min-height: calc(100vh - 60px);
+    padding: 15px !important;
+    margin: 0 !important;
+    overflow: visible;
+  }
+
+  /* Ajustăm grid-urile */
+  #playlists-grid,
+  #results {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Ajustăm dimensiunile cardurilor */
+  .playlist-item {
+    height: auto;
+    min-height: 200px;
+  }
+
+  .playlist-item img {
+    height: 140px !important;
+  }
+
+  /* Stiluri pentru butoanele de meniu */
+  .burger-menu {
+    background: none;
+    border: none;
+    color: #FBF5DD;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+  }
+}
+
+/* Ajustări pentru ecrane foarte mici */
+@media screen and (max-width: 480px) {
+  #playlists-grid,
+  #results {
+    grid-template-columns: 1fr;
+  }
+
+  .playlist-item {
+    min-height: 180px;
+  }
+
+  .playlist-item img {
+    height: 120px !important;
+  }
+
+  .player-controls button {
+    padding: 8px !important;
+  }
+
+  #current-track-img {
+    width: 150px !important;
+    height: 150px !important;
+  }
+}
+
+/* Adăugăm stil pentru poza de profil */
+#user-profile-pic {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#user-profile-pic:hover {
+    transform: scale(1.1);
+}
+
+/* Adăugăm stiluri pentru butoanele noi */
+.player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+#shuffle-button.active,
+#repeat-button.active {
+    background-color: #DDA853 !important;
+    color: #164047 !important;
+}
+
+.playlist-track {
+    display: grid;
+    grid-template-columns: 30px 1fr 30px;
+    gap: 8px;
+    align-items: center;
+}
+
+.add-to-queue-btn {
+    background: none;
+    border: none;
+    color: #DDA853;
+    cursor: pointer;
+    padding: 5px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.playlist-track:hover .add-to-queue-btn {
+    opacity: 1;
+}
+
+.add-to-queue-btn:hover {
+    color: #A6CDC6;
 }

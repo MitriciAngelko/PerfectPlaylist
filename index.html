@@ -1,89 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-  <title>Perfect Playlist</title>
-  <meta name="viewport" content="width=device-width" initial-scale=1>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-  <link rel="stylesheet" type="text/css" href="src/style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
-  <script
-  src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-  crossorigin="anonymous"
-  ></script>
+    <title>Perfect Playlist</title>
+    <meta name="viewport" content="width=device-width" initial-scale=1>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="src/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-  <br>
-  <!-- Sidebar stanga -->
-  <div class="ui doubling stackable grid container">
-     <div class="one wide column centered sidebar">
-        <div class="ui segments centered">
-           <div class ="ui padded segment" id="logo">
-              <img src="src/logo.png" alt="logo" id="logo-img">
-           </div>
-           <div class="ui padded segment" id="login">
-              <button class="ui fluid button" id="login-button" onclick="authorize()">Login</button>
-           </div>
-           <div class="ui padded segment" id="button-segment">
-              <button class="ui fluid button" id="artist-button" onclick="getTopArtists()">Artists</button>
-              <br>
-              <button class="ui fluid button" id="track-button" onclick="getTopTracks()">Tracks</button>
-              <br>
-              <button class="ui fluid button" id="create-playlist-button" onclick="createPlaylist()">Create Playlist</button>
-           </div>
-           <div class="ui padded segment" id="timeForm">
-              <div class="ui form">
-                 <div class="grid" id="timeEntry">
-                    <p>Time:</p>
-                    <div class="field">
-                       <div class="ui radio checkbox">
-                          <input type="radio" id="last-4-weeks" name="time" value="short_term" checked="checked">
-                          <label>Last 4 weeks</label>
-                       </div>
-                    </div>
-                    <div class="field">
-                       <div class="ui radio checkbox">
-                          <input type="radio" id="last-6-months" name="time" value="medium_term">
-                          <label>Last 6 months</label>
-                       </div>
-                    </div>
-                    <div class="field">
-                       <div class="ui radio checkbox">
-                          <input type="radio" id="all-time" name="time" value="long_term">
-                          <label>All time</label>
-                       </div>
-                    </div>
-                 </div>
-              </div>
-           </div>
-           <div class="ui padded segment form" id="numForm">
-              <p id="number">Number of results: 20</p>
-              <input type="range" min="1" max="50" value="20" class="slider" id="numResponses">
-           </div>
+    <div class="ui grid container">
+        <!-- Sidebar stânga - User Profile -->
+        <div class="three wide column sidebar">
+            <div class="ui segments">
+                <div class="ui padded segment" id="logo">
+                    <img src="src/logo.png" alt="logo" id="logo-img">
+                </div>
+                <div class="ui padded segment" id="profile">
+                    <img id="user-profile-pic" alt="User Profile Picture">
+                    <h3 id="user-name-text"></h3>
+                </div>
+                <div class="ui padded segment" id="login">
+                    <button class="ui fluid button" id="login-button">Login</button>
+                    <br>
+                    <button class="ui fluid button negative" id="logout-button" style="display: none;">Logout</button>
+                </div>
+                <div class="ui padded segment" id="navigation">
+                    <button class="ui fluid button" onclick="showLibrary()">Your Library</button>
+                    <br>
+                    <button class="ui fluid button" onclick="showTopItems()">Top Items</button>
+                </div>
+            </div>
         </div>
-     </div>
-     <div class="twelve wide column centered">
-        <br>
-        <div class="ui eight column centered" id="results-container">
-           <div id="results-header"></div>
-           <br>
-           <div class="ui stackable five column grid container content" id="results"></div>
+
+        <!-- Conținut principal -->
+        <div class="sixteen wide column main-content">
+            <!-- Player compact -->
+            <div class="player-compact" style="display: none;">
+                <div class="current-track-info">
+                    <img id="current-track-img" alt="Current Track">
+                    <div class="track-details">
+                        <h3 id="current-track-name"></h3>
+                        <p id="current-track-artist"></p>
+                    </div>
+                    <div class="player-controls">
+                        <button class="ui circular icon button" id="prev-button">
+                            <i class="step backward icon"></i>
+                        </button>
+                        <button class="ui circular icon button" id="play-pause-button">
+                            <i class="play icon"></i>
+                        </button>
+                        <button class="ui circular icon button" id="next-button">
+                            <i class="step forward icon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Library/Playlist View -->
+            <div id="library-view" class="hidden">
+                <h2>Your Playlists</h2>
+                <div class="playlist-grid" id="playlists-grid">
+                    <!-- Playlist-urile vor fi inserate aici -->
+                </div>
+            </div>
+
+            <!-- Top Items View (hidden by default) -->
+            <div id="top-items-view" class="hidden">
+                <div id="time-range-controls">
+                    <div class="ui padded segment" id="timeForm">
+                        <div class="ui form">
+                            <div class="grouped fields">
+                                <label>Time Range:</label>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="time" value="short_term" checked="checked">
+                                        <label>Last 4 Weeks</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="time" value="medium_term">
+                                        <label>Last 6 Months</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="time" value="long_term">
+                                        <label>All Time</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui padded segment" id="numForm">
+                    <div class="ui form">
+                        <label for="numResponses">Number of Results:</label>
+                        <input type="range" min="1" max="50" value="20" class="slider" id="numResponses">
+                        <div id="number">Number of results: 20</div>
+                    </div>
+                </div>
+                <div id="top-items-content">
+                    <button class="ui button" onclick="getTopArtists()">Top Artists</button>
+                    <button class="ui button" onclick="getTopTracks()">Top Tracks</button>
+                    <div id="results-container">
+                        <div id="results"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-     </div>
-  </div>
-  
-  <!-- sidebar dreapta -->
- <div class="one wide column centered sidebar">
-   <div class="ui segments centered" id="sidebarDreapta">
-      <div class="ui padded segment" id="profile-picture">
-         <img id="user-profile-pic" alt="User Profile Picture">
-      </div>
-      <div class="ui padded segment" id="user-name">
-         <p id="user-name-text"></p>
-      </div>
-   </div>
-</div>
-  <script src="src/script.js"></script>
+
+        <!-- Sidebar dreapta - Current Playlist -->
+        <div class="three wide column right sidebar">
+            <h3>Current Playlist</h3>
+            <div id="playlist-tracks">
+                <!-- Melodiile din playlist vor fi afișate aici -->
+            </div>
+        </div>
+    </div>
+    <script type="module" src="src/script.js"></script>
+</body>
 </html>

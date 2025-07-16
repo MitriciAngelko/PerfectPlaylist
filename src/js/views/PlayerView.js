@@ -1,12 +1,12 @@
 class PlayerView {
     constructor() {
         this.elements = {
-            playPauseBtn: document.getElementById('play-pause-button'),
-            nextBtn: document.getElementById('next-button'),
-            prevBtn: document.getElementById('prev-button'),
-            trackImg: document.getElementById('current-track-img'),
-            trackName: document.getElementById('current-track-name'),
-            trackArtist: document.getElementById('current-track-artist')
+            playPauseBtn: document.getElementById('play-btn'), // era 'play-pause-button'
+            nextBtn: document.getElementById('next-btn'), // era 'next-button'
+            prevBtn: document.getElementById('prev-btn'), // era 'prev-button'
+            trackImg: document.getElementById('track-artwork'), // era 'current-track-img'
+            trackName: document.getElementById('track-title'), // era 'current-track-name'
+            trackArtist: document.getElementById('track-artist') // acesta era corect
         };
     }
 

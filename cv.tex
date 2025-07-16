@@ -1,0 +1,153 @@
+%-------------------------
+% Resume in Latex
+% Website: https://github.com/sb2nov/resume
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[pdftex]{hyperref}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins for better space utilization
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.7in}
+\addtolength{\textheight}{1.2in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting - reduced spacing
+\titleformat{\section}{
+  \vspace{-6pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-6pt}]
+
+%-------------------------
+% Custom commands - optimized spacing
+\newcommand{\resumeItem}[2]{
+  \item\small{
+    \textbf{#1}{: #2 \vspace{-3pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-6pt}
+}
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+
+\renewcommand{\labelitemii}{$\circ$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-6pt}}
+
+%-------------------------------------------
+%%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------HEADING-----------------
+\begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+  \textbf{\Large Angelko Mitrici} & \href{mailto:angelko.mitrici@yahoo.com}{angelko.mitrici@yahoo.com} \\
+  \href{https://github.com/MitriciAngelko}{GitHub} $|$ \href{https://www.linkedin.com/in/angelko-mitrici-13437725b/}{LinkedIn} & +40 (757) 081 026 \\
+\end{tabular*}
+
+%-----------EDUCATION-----------------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {West University of Timisoara}{Timisoara, Romania}
+      {B.Sc. Computer Science, 3rd Year}{2023 -- Present}
+    \resumeSubheading
+      {Vrije Universiteit Amsterdam}{Amsterdam, Netherlands}
+      {B.Sc. Computer Science, 1st Year (68 ECTS)}{2022 -- 2023}
+    \resumeSubheading
+      {Moise Nicoară National College}{Arad, Romania}
+      {Mathematics \& Computer Science, GPA: 8.66/10}{2018 -- 2022}
+  \resumeSubHeadingListEnd
+
+%-----------EXPERIENCE-----------------
+\section{Experience}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Software Development Intern}{June 2024 -- Present}
+      {Iadran Agri}{Arad, Romania}
+      \resumeItemListStart
+        \resumeItem{Full-Stack Development}
+          {Built and deployed company website with inventory management database supporting business operations}
+        \resumeItem{IT Infrastructure}
+          {Managed company servers, resolved technical issues, and optimized system performance}
+        \resumeItem{Business Development}
+          {Led product promotion at national fairs, contributing to sales growth and market expansion}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Student Leader \& Volunteer}{September 2021 -- June 2022}
+      {Interact Arad Cetate}{Arad, Romania}
+      \resumeItemListStart
+        \resumeItem{Project Management}
+          {Organized charitable events and coordinated donation distribution to local schools and orphanages}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------------
+\section{Projects}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {University Course Management System}{2024}
+      {Full-Stack Platform}{React.js, Node.js, Firebase, Redux}
+      \resumeItemListStart
+        \resumeItem{Scalable Architecture}
+          {Built enrollment platform serving 500+ students with role-based auth, RESTful API, and AI-powered recommendations}
+        \resumeItem{Performance \& Automation}
+          {Achieved 95+ Lighthouse scores with automated allocation algorithms and real-time Firebase sync}
+      \resumeItemListEnd
+    \resumeSubheading
+      {PerfectPlaylist - Spotify Analytics}{2024}
+      {Music Analytics App}{JavaScript, Spotify Web API, Vite}
+      \resumeItemListStart
+        \resumeItem{OAuth \& Analytics}
+          {Developed Spotify integration with OAuth authentication and comprehensive listening analytics}
+        \resumeItem{Real-time Features}
+          {Implemented live player controls and automated playlist generation using MVC architecture}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------------
+\section{Technical Skills}
+ \resumeSubHeadingListStart
+   \resumeSubItem{Programming Languages}
+     {JavaScript, TypeScript, Python, C++, C, HTML/CSS, SQL}
+   \resumeSubItem{Frameworks \& Technologies}
+     {React.js, Node.js, Firebase, Git, RESTful APIs, OAuth, Vite, Redux}
+   \resumeSubItem{Languages}
+     {English (C1), German (B1), Romanian (Native)}
+   \resumeSubItem{Certifications}
+     {ECDL (Microsoft Office Suite), European Category B Driving License}
+ \resumeSubHeadingListEnd
+
+%-------------------------------------------
+\end{document}

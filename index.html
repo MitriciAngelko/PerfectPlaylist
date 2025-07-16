@@ -2,122 +2,360 @@
 <html lang="en">
 <head>
     <title>Perfect Playlist</title>
-    <meta name="viewport" content="width=device-width" initial-scale=1>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="src/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <div class="ui grid container">
-        <!-- Sidebar stânga - User Profile -->
-        <div class="three wide column sidebar">
-            <div class="ui segments">
-                <div class="ui padded segment" id="logo">
-                    <img src="src/logo.png" alt="logo" id="logo-img">
+    <!-- Texture Overlay -->
+    <div class="texture-overlay"></div>
+    
+    <!-- Main Container -->
+    <div class="studio-container">
+        <!-- Navigation Header -->
+        <header class="studio-header">
+            <div class="logo-section">
+                <div class="logo-grid">
+                    <div class="logo-cell">P</div>
+                    <div class="logo-cell">E</div>
+                    <div class="logo-cell">R</div>
+                    <div class="logo-cell filled">•</div>
                 </div>
-                <div class="ui padded segment" id="profile">
-                    <img id="user-profile-pic" alt="User Profile Picture">
-                    <h3 id="user-name-text"></h3>
-                </div>
-                <div class="ui padded segment" id="login">
-                    <button class="ui fluid button" id="login-button">Login</button>
-                    <br>
-                    <button class="ui fluid button negative" id="logout-button" style="display: none;">Logout</button>
-                </div>
-                <div class="ui padded segment" id="navigation">
-                    <button class="ui fluid button" onclick="showLibrary()">Your Library</button>
-                    <br>
-                    <button class="ui fluid button" onclick="showTopItems()">Top Items</button>
-                </div>
+                <h1 class="studio-title">PERFECT PLAYLIST</h1>
             </div>
-        </div>
-
-        <!-- Conținut principal -->
-        <div class="sixteen wide column main-content">
-            <!-- Player compact -->
-            <div class="player-compact" style="display: none;">
-                <div class="current-track-info">
-                    <img id="current-track-img" alt="Current Track">
-                    <div class="track-details">
-                        <h3 id="current-track-name"></h3>
-                        <p id="current-track-artist"></p>
-                    </div>
-                    <div class="player-controls">
-                        <button class="ui circular icon button" id="prev-button">
-                            <i class="step backward icon"></i>
-                        </button>
-                        <button class="ui circular icon button" id="play-pause-button">
-                            <i class="play icon"></i>
-                        </button>
-                        <button class="ui circular icon button" id="next-button">
-                            <i class="step forward icon"></i>
-                        </button>
+            
+            <nav class="studio-nav">
+                <button class="nav-tile active" data-view="library">
+                    <span class="nav-label">LIBRARY</span>
+                    <div class="nav-indicator"></div>
+                </button>
+                <button class="nav-tile" data-view="analysis">
+                    <span class="nav-label">ANALYSIS</span>
+                    <div class="nav-indicator"></div>
+                </button>
+                <button class="nav-tile" data-view="curation">
+                    <span class="nav-label">CURATION</span>
+                    <div class="nav-indicator"></div>
+                </button>
+                <button class="nav-tile" data-view="eq">
+                    <span class="nav-label">SOUND</span>
+                    <div class="nav-indicator"></div>
+                </button>
+            </nav>
+            
+            <div class="user-section">
+                <div class="user-info" id="profile">
+                    <img id="user-profile-pic" alt="User Profile" class="user-avatar">
+                    <div class="user-details">
+                        <span id="user-name-text" class="user-name"></span>
+                        <span class="user-status">AUDIOPHILE</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- Library/Playlist View -->
-            <div id="library-view" class="hidden">
-                <h2>Your Playlists</h2>
-                <div class="playlist-grid" id="playlists-grid">
-                    <!-- Playlist-urile vor fi inserate aici -->
+                <div class="auth-controls" id="login">
+                    <button class="auth-btn primary" id="login-button">
+                        <i class="fab fa-spotify"></i>
+                        CONNECT
+                    </button>
+                    <button class="auth-btn secondary" id="logout-button" style="display: none;">
+                        <i class="fas fa-power-off"></i>
+                        DISCONNECT
+                    </button>
                 </div>
             </div>
+        </header>
 
-            <!-- Top Items View (hidden by default) -->
-            <div id="top-items-view" class="hidden">
-                <div id="time-range-controls">
-                    <div class="ui padded segment" id="timeForm">
-                        <div class="ui form">
-                            <div class="grouped fields">
-                                <label>Time Range:</label>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                        <input type="radio" name="time" value="short_term" checked="checked">
-                                        <label>Last 4 Weeks</label>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                        <input type="radio" name="time" value="medium_term">
-                                        <label>Last 6 Months</label>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                        <input type="radio" name="time" value="long_term">
-                                        <label>All Time</label>
-                                    </div>
-                                </div>
+        <!-- Main Content Grid -->
+        <main class="studio-main">
+            <!-- Library View -->
+            <section id="library-view" class="content-panel active">
+                <div class="panel-header">
+                    <h2 class="panel-title">YOUR COLLECTION</h2>
+                    <div class="panel-controls">
+                        <button class="control-btn">
+                            <i class="fas fa-th-large"></i>
+                            GRID
+                        </button>
+                        <button class="control-btn">
+                            <i class="fas fa-list"></i>
+                            LIST
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="collection-grid" id="playlists-grid">
+                    <!-- Playlists will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Analysis View -->
+            <section id="analysis-view" class="content-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">LISTENING ANALYSIS</h2>
+                    <div class="analysis-period">
+                        <button class="period-btn active">4W</button>
+                        <button class="period-btn">6M</button>
+                        <button class="period-btn">ALL</button>
+                    </div>
+                </div>
+
+                <!-- Analysis Controls -->
+                <div class="analysis-controls">
+                    <div class="control-group" id="timeForm">
+                        <label class="control-label">ANALYSIS PERIOD</label>
+                        <div class="radio-grid">
+                            <label class="radio-tile">
+                                <input type="radio" name="time" value="short_term" checked>
+                                <span class="tile-content">
+                                    <span class="tile-label">RECENT</span>
+                                    <span class="tile-desc">Last 4 Weeks</span>
+                                </span>
+                            </label>
+                            <label class="radio-tile">
+                                <input type="radio" name="time" value="medium_term">
+                                <span class="tile-content">
+                                    <span class="tile-label">EXTENDED</span>
+                                    <span class="tile-desc">Last 6 Months</span>
+                                </span>
+                            </label>
+                            <label class="radio-tile">
+                                <input type="radio" name="time" value="long_term">
+                                <span class="tile-content">
+                                    <span class="tile-label">ARCHIVE</span>
+                                    <span class="tile-desc">All Time</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="control-group" id="numForm">
+                        <label class="control-label">SAMPLE SIZE</label>
+                        <div class="fader-container">
+                            <input type="range" min="1" max="50" value="20" class="studio-fader" id="numResponses">
+                            <div class="fader-display">
+                                <span id="number">20</span>
+                                <span class="fader-unit">TRACKS</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="ui padded segment" id="numForm">
-                    <div class="ui form">
-                        <label for="numResponses">Number of Results:</label>
-                        <input type="range" min="1" max="50" value="20" class="slider" id="numResponses">
-                        <div id="number">Number of results: 20</div>
-                    </div>
-                </div>
-                <div id="top-items-content">
-                    <button class="ui button" onclick="getTopArtists()">Top Artists</button>
-                    <button class="ui button" onclick="getTopTracks()">Top Tracks</button>
-                    <div id="results-container">
-                        <div id="results"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Sidebar dreapta - Current Playlist -->
-        <div class="three wide column right sidebar">
-            <h3>Current Playlist</h3>
-            <div id="playlist-tracks">
-                <!-- Melodiile din playlist vor fi afișate aici -->
+                <!-- Analysis Actions -->
+                <div class="action-grid">
+                    <button class="action-tile primary" onclick="getTopArtists()">
+                        <div class="tile-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <div class="tile-content">
+                            <span class="tile-label">ARTISTS</span>
+                            <span class="tile-desc">Top Performers</span>
+                        </div>
+                    </button>
+                    <button class="action-tile primary" onclick="getTopTracks()">
+                        <div class="tile-icon">
+                            <i class="fas fa-waveform-lines"></i>
+                        </div>
+                        <div class="tile-content">
+                            <span class="tile-label">TRACKS</span>
+                            <span class="tile-desc">Most Played</span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Results Display -->
+                <div id="results-container" class="results-section">
+                    <div id="results" class="results-grid"></div>
+                </div>
+            </section>
+
+            <!-- Curation View (Mock Feature) -->
+            <section id="curation-view" class="content-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">INTELLIGENT CURATION</h2>
+                    <div class="panel-status">
+                        <span class="status-indicator active"></span>
+                        <span class="status-text">AI ANALYSIS ACTIVE</span>
+                    </div>
+                </div>
+
+                <div class="curation-dashboard">
+                    <div class="curation-tile">
+                        <h3 class="tile-header">MOOD MAPPING</h3>
+                        <div class="mood-grid">
+                            <div class="mood-point active" data-mood="energetic">ENERGETIC</div>
+                            <div class="mood-point" data-mood="mellow">MELLOW</div>
+                            <div class="mood-point" data-mood="focused">FOCUSED</div>
+                            <div class="mood-point" data-mood="ambient">AMBIENT</div>
+                        </div>
+                    </div>
+                    
+                    <div class="curation-tile">
+                        <h3 class="tile-header">AUTO-SEQUENCING</h3>
+                        <div class="sequence-controls">
+                            <button class="sequence-btn">BPM MATCHING</button>
+                            <button class="sequence-btn">KEY HARMONY</button>
+                            <button class="sequence-btn">ENERGY FLOW</button>
+                        </div>
+                    </div>
+                    
+                    <div class="curation-tile">
+                        <h3 class="tile-header">LISTENING CONTEXT</h3>
+                        <div class="context-grid">
+                            <div class="context-option">WORK SESSION</div>
+                            <div class="context-option">DEEP LISTENING</div>
+                            <div class="context-option">BACKGROUND</div>
+                            <div class="context-option">SOCIAL</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EQ/Sound View (Mock Feature) -->
+            <section id="eq-view" class="content-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">SOUND CONTROL</h2>
+                    <div class="sound-presets">
+                        <button class="preset-btn active">FLAT</button>
+                        <button class="preset-btn">WARM</button>
+                        <button class="preset-btn">BRIGHT</button>
+                        <button class="preset-btn">CUSTOM</button>
+                    </div>
+                </div>
+
+                <div class="eq-console">
+                    <div class="eq-section">
+                        <h3 class="eq-label">FREQUENCY RESPONSE</h3>
+                        <div class="eq-bands">
+                            <div class="eq-band">
+                                <div class="band-fader">
+                                    <input type="range" min="-12" max="12" value="0" class="eq-slider" data-freq="60">
+                                    <span class="band-value">0</span>
+                                </div>
+                                <span class="band-label">60Hz</span>
+                            </div>
+                            <div class="eq-band">
+                                <div class="band-fader">
+                                    <input type="range" min="-12" max="12" value="0" class="eq-slider" data-freq="250">
+                                    <span class="band-value">0</span>
+                                </div>
+                                <span class="band-label">250Hz</span>
+                            </div>
+                            <div class="eq-band">
+                                <div class="band-fader">
+                                    <input type="range" min="-12" max="12" value="0" class="eq-slider" data-freq="1k">
+                                    <span class="band-value">0</span>
+                                </div>
+                                <span class="band-label">1kHz</span>
+                            </div>
+                            <div class="eq-band">
+                                <div class="band-fader">
+                                    <input type="range" min="-12" max="12" value="0" class="eq-slider" data-freq="4k">
+                                    <span class="band-value">0</span>
+                                </div>
+                                <span class="band-label">4kHz</span>
+                            </div>
+                            <div class="eq-band">
+                                <div class="band-fader">
+                                    <input type="range" min="-12" max="12" value="0" class="eq-slider" data-freq="16k">
+                                    <span class="band-value">0</span>
+                                </div>
+                                <span class="band-label">16kHz</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="spatial-section">
+                        <h3 class="eq-label">SPATIAL PROCESSING</h3>
+                        <div class="spatial-controls">
+                            <div class="spatial-control">
+                                <label>REVERB</label>
+                                <input type="range" min="0" max="100" value="20" class="spatial-slider">
+                            </div>
+                            <div class="spatial-control">
+                                <label>STEREO WIDTH</label>
+                                <input type="range" min="0" max="200" value="100" class="spatial-slider">
+                            </div>
+                            <div class="spatial-control">
+                                <label>DEPTH</label>
+                                <input type="range" min="0" max="100" value="30" class="spatial-slider">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Control Room (Right Sidebar) -->
+        <aside class="control-room">
+            <div class="room-header">
+                <h3 class="room-title">CONTROL ROOM</h3>
+                <div class="room-status">
+                    <span class="status-dot active"></span>
+                    <span>MONITORING</span>
+                </div>
             </div>
-        </div>
+            
+            <!-- Now Playing -->
+            <div class="now-playing-section">
+                <div class="track-display" style="display: none;" id="current-playing">
+                    <div class="track-artwork">
+                        <img id="current-track-img" alt="Current Track">
+                        <div class="play-indicator">
+                            <div class="waveform">
+                                <span></span><span></span><span></span><span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="track-info">
+                        <h4 id="current-track-name" class="track-title"></h4>
+                        <p id="current-track-artist" class="track-artist"></p>
+                    </div>
+                </div>
+                
+                <!-- Transport Controls -->
+                <div class="transport-controls">
+                    <button class="transport-btn" id="prev-button">
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                    <button class="transport-btn primary" id="play-pause-button">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="transport-btn" id="next-button">
+                        <i class="fas fa-step-forward"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Queue Management -->
+            <div class="queue-section">
+                <div class="queue-header">
+                    <h4 class="queue-title">PLAYBACK QUEUE</h4>
+                    <button class="queue-action">
+                        <i class="fas fa-random"></i>
+                    </button>
+                </div>
+                <div class="queue-list" id="playlist-tracks">
+                    <div class="queue-empty">
+                        <div class="empty-icon">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <span class="empty-text">NO TRACKS QUEUED</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
     </div>
-    <script type="module" src="src/script.js"></script>
+
+    <script src="src/script.js"></script>
 </body>
 </html>

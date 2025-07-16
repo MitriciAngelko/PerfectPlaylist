@@ -1,69 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Perfect Playlist - Player</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <title>Audio Studio - Perfect Playlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <nav class="mobile-nav">
-        <button class="burger-menu" id="sidebar-toggle">
-            <i class="bars icon"></i>
-        </button>
-        <h3>Perfect Playlist</h3>
-        <button class="burger-menu" id="playlist-toggle">
-            <i class="list icon"></i>
-        </button>
-    </nav>
-
-    <div class="ui grid container">
-        <div class="player-page">
-            <div class="player-header">
-                <a href="../index.html" class="ui green button">
-                    <i class="arrow left icon"></i> Back
-                </a>
-                <h1>Now Playing</h1>
+    <!-- Texture Overlay -->
+    <div class="texture-overlay"></div>
+    
+    <!-- Audio Studio Container -->
+    <div class="audio-studio">
+        <!-- Studio Header -->
+        <header class="studio-header">
+            <div class="logo-section">
+                <div class="logo-grid">
+                    <div class="logo-cell">A</div>
+                    <div class="logo-cell">U</div>
+                    <div class="logo-cell">D</div>
+                    <div class="logo-cell filled">•</div>
+                </div>
+                <h1 class="studio-title">AUDIO STUDIO</h1>
             </div>
             
-            <div class="player-content">
-                <div class="current-track-info">
-                    <img id="current-track-img" alt="Current Track">
-                    <h2 id="current-track-name"></h2>
-                    <h3 id="current-track-artist"></h3>
-                    <div class="player-controls">
-                        <button id="shuffle-button" class="ui circular icon button">
-                            <i class="random icon"></i>
+            <nav class="studio-nav">
+                <a href="../index.html" class="nav-tile">
+                    <span class="nav-label">LIBRARY</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <button class="nav-tile active">
+                    <span class="nav-label">PLAYER</span>
+                    <div class="nav-indicator"></div>
+                </button>
+                <button class="nav-tile" onclick="toggleStudioMode()">
+                    <span class="nav-label">STUDIO</span>
+                    <div class="nav-indicator"></div>
+                </button>
+            </nav>
+            
+            <div class="session-info">
+                <div class="session-status">
+                    <span class="status-dot active"></span>
+                    <span class="status-text">LIVE SESSION</span>
+                </div>
+                <div class="session-time" id="session-time">00:00:00</div>
+            </div>
+        </header>
+        
+        <!-- Main Studio Layout -->
+        <main class="studio-workspace">
+            <!-- Mixing Console (Left) -->
+            <section class="mixing-console">
+                <div class="console-header">
+                    <h2 class="console-title">MIXING CONSOLE</h2>
+                    <div class="console-status">
+                        <span class="level-indicator"></span>
+                        <span class="level-indicator"></span>
+                        <span class="level-indicator active"></span>
+                        <span class="level-indicator active"></span>
+                        <span class="level-indicator"></span>
+                    </div>
+                </div>
+                
+                <!-- Track Information Panel -->
+                <div class="track-panel" id="track-panel">
+                    <div class="track-loading">
+                        <div class="loading-icon">
+                            <i class="fas fa-compact-disc"></i>
+                        </div>
+                        <span class="loading-text">NO TRACK LOADED</span>
+                        <p class="loading-desc">Select a playlist to begin session</p>
+                    </div>
+                    
+                    <div class="track-active" id="track-active" style="display: none;">
+                        <div class="track-artwork-container">
+                            <div class="vinyl-record" id="vinyl-record">
+                                <img id="track-artwork" src="" alt="Track Artwork">
+                                <div class="vinyl-center">
+                                    <div class="vinyl-hole"></div>
+                                </div>
+                            </div>
+                            <div class="record-light"></div>
+                        </div>
+                        
+                        <div class="track-details">
+                            <h3 id="track-title" class="track-title"></h3>
+                            <p id="track-artist" class="track-artist"></p>
+                            <p id="track-album" class="track-album"></p>
+                        </div>
+                        
+                        <!-- Progress Section -->
+                        <div class="progress-section">
+                            <div class="time-display">
+                                <span id="current-time">0:00</span>
+                                <span id="total-time">0:00</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-bar" id="progress-bar"></div>
+                                <input type="range" id="progress-input" min="0" max="100" value="0" class="progress-slider">
+                            </div>
+                        </div>
+                        
+                        <!-- Transport Controls -->
+                        <div class="transport-section">
+                            <button class="transport-btn" id="shuffle-btn">
+                                <i class="fas fa-random"></i>
+                            </button>
+                            <button class="transport-btn" id="prev-btn">
+                                <i class="fas fa-step-backward"></i>
+                            </button>
+                            <button class="transport-btn primary" id="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="transport-btn" id="next-btn">
+                                <i class="fas fa-step-forward"></i>
+                            </button>
+                            <button class="transport-btn" id="repeat-btn">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Volume Control -->
+                        <div class="volume-section">
+                            <label class="volume-label">MASTER VOLUME</label>
+                            <div class="volume-control">
+                                <i class="fas fa-volume-down"></i>
+                                <input type="range" id="volume-slider" min="0" max="100" value="70" class="volume-slider">
+                                <i class="fas fa-volume-up"></i>
+                                <span id="volume-display" class="volume-display">70</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- EQ Section -->
+                <div class="eq-panel">
+                    <h3 class="panel-label">EQUALIZER</h3>
+                    <div class="eq-controls">
+                        <div class="eq-band">
+                            <input type="range" min="-12" max="12" value="0" class="eq-fader" data-freq="60">
+                            <span class="eq-value">0</span>
+                            <label class="eq-label">60Hz</label>
+                        </div>
+                        <div class="eq-band">
+                            <input type="range" min="-12" max="12" value="0" class="eq-fader" data-freq="250">
+                            <span class="eq-value">0</span>
+                            <label class="eq-label">250Hz</label>
+                        </div>
+                        <div class="eq-band">
+                            <input type="range" min="-12" max="12" value="0" class="eq-fader" data-freq="1k">
+                            <span class="eq-value">0</span>
+                            <label class="eq-label">1kHz</label>
+                        </div>
+                        <div class="eq-band">
+                            <input type="range" min="-12" max="12" value="0" class="eq-fader" data-freq="4k">
+                            <span class="eq-value">0</span>
+                            <label class="eq-label">4kHz</label>
+                        </div>
+                        <div class="eq-band">
+                            <input type="range" min="-12" max="12" value="0" class="eq-fader" data-freq="16k">
+                            <span class="eq-value">0</span>
+                            <label class="eq-label">16kHz</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Queue Management (Right) -->
+            <section class="queue-manager">
+                <div class="queue-header">
+                    <h3 class="queue-title">PLAYBACK QUEUE</h3>
+                    <div class="queue-controls">
+                        <button class="queue-btn" id="clear-queue">
+                            <i class="fas fa-trash"></i>
                         </button>
-                        <button id="prev-button" class="ui circular icon button">
-                            <i class="step backward icon"></i>
-                        </button>
-                        <button id="play-pause-button" class="ui circular icon button">
-                            <i class="play icon"></i>
-                        </button>
-                        <button id="next-button" class="ui circular icon button">
-                            <i class="step forward icon"></i>
-                        </button>
-                        <button id="repeat-button" class="ui circular icon button">
-                            <i class="sync icon"></i>
+                        <button class="queue-btn" id="save-queue">
+                            <i class="fas fa-save"></i>
                         </button>
                     </div>
                 </div>
-
-                <div class="current-playlist">
-                    <h2>Current Playlist</h2>
-                    <div class="ui divided items" id="playlist-tracks">
-                        <!-- Tracks will be inserted here -->
+                
+                <div class="queue-content">
+                    <div class="queue-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">TRACKS</span>
+                            <span class="stat-value" id="queue-count">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">DURATION</span>
+                            <span class="stat-value" id="queue-duration">00:00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="queue-list" id="queue-list">
+                        <div class="queue-empty">
+                            <div class="empty-icon">
+                                <i class="fas fa-list-music"></i>
+                            </div>
+                            <span class="empty-text">QUEUE EMPTY</span>
+                            <p class="empty-desc">Load a playlist to start your session</p>
+                        </div>
                     </div>
                 </div>
-
-                <div id="playlists-grid">
-                    <!-- Playlist-urile vor fi inserate aici dinamic -->
+            </section>
+        </main>
+        
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav">
+            <button class="mobile-nav-btn" onclick="toggleMobilePanel('track')">
+                <i class="fas fa-music"></i>
+                <span>TRACK</span>
+            </button>
+            <button class="mobile-nav-btn active" onclick="toggleMobilePanel('controls')">
+                <i class="fas fa-sliders-h"></i>
+                <span>CONTROLS</span>
+            </button>
+            <button class="mobile-nav-btn" onclick="toggleMobilePanel('queue')">
+                <i class="fas fa-list"></i>
+                <span>QUEUE</span>
+            </button>
+        </nav>
+    </div>
+    
+    <!-- Studio Mode Modal -->
+    <div class="studio-modal" id="studio-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">STUDIO MODE</h3>
+                <button class="modal-close" onclick="toggleStudioMode()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="studio-feature">
+                    <h4>ADVANCED EQ</h4>
+                    <p>Professional 31-band equalizer with spectrum analysis</p>
                 </div>
+                <div class="studio-feature">
+                    <h4>SPATIAL AUDIO</h4>
+                    <p>3D positioning and reverb controls</p>
+                </div>
+                <div class="studio-feature">
+                    <h4>CROSSFADE</h4>
+                    <p>Seamless track transitions with BPM matching</p>
+                </div>
+                <div class="studio-feature">
+                    <h4>RECORDING</h4>
+                    <p>Session recording and mix export</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" onclick="toggleStudioMode()">CLOSE</button>
+                <button class="modal-btn primary">UPGRADE TO PRO</button>
             </div>
         </div>
     </div>
-    <script type="module" src="player.js"></script>
+
+    <script src="player.js"></script>
 </body>
-</html> 
+</html>

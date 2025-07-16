@@ -9,6 +9,7 @@ let currentPlaylist = null;
 document.addEventListener('DOMContentLoaded', function() {
     initializeStudio();
     checkAuthState();
+    updateUserInterface(); // <-- adăugat aici
     setupStudioControls();
     setupNavigationHandlers();
     setupSliderControls();

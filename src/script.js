@@ -278,8 +278,8 @@ async function exchangeCodeForToken(code) {
             body: new URLSearchParams({
                 grant_type: 'authorization_code',
                 code: code,
-                redirect_uri: window.location.origin + window.location.pathname,
-                client_id: '4c6916826bc547ce96d0f32c7e7f7a99',
+                redirect_uri: 'http://localhost:5173', // la fel ca la initiateAuth
+                client_id: 'f9fa57a16b964585981ff4bffd1fb46f', // la fel ca la initiateAuth
                 client_secret: 'f79b11c90dd746fb98e73e8d5c3dfaa9'
             })
         });

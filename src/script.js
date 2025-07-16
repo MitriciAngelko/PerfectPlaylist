@@ -247,8 +247,8 @@ function checkAuthState() {
 function initiateAuth() {
     console.log('🎧 Initiating Spotify connection...');
     
-    const clientId = '4c6916826bc547ce96d0f32c7e7f7a99';
-    const redirectUri = window.location.origin + window.location.pathname;
+    const clientId = 'f9fa57a16b964585981ff4bffd1fb46f'; // Client ID corect
+    const redirectUri = 'http://localhost:5173'; // Redirect URI exact ca în dashboard
     const scopes = [
         'user-read-private',
         'user-read-email',

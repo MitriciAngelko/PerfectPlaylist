@@ -474,9 +474,183 @@ function createPlaylistElement(playlist) {
 function selectPlaylist(playlist) {
     currentPlaylist = playlist;
     console.log(`🎵 Selected: ${playlist.name}`);
-    
-    // Switch to player view
-    window.location.href = 'src/player.html';
+    showPlaylistTracks(playlist);
+}
+
+async function showPlaylistTracks(playlist) {
+    console.log('showPlaylistTracks called', playlist);
+    // Asigură-te că rămâi pe library-view
+    const panels = document.querySelectorAll('.content-panel');
+    panels.forEach(panel => panel.classList.remove('active'));
+    const libraryView = document.getElementById('library-view');
+    if (libraryView) libraryView.classList.add('active');
+
+    // Ascunde gridul cu playlisturi
+    const playlistsGrid = document.getElementById('playlists-grid');
+    if (playlistsGrid) playlistsGrid.style.display = 'none';
+
+    // Containerul pentru melodii
+    const tracksContainerId = 'playlist-tracks-container';
+    // Șterge vechiul container dacă există
+    let oldTracksContainer = document.getElementById(tracksContainerId);
+    if (oldTracksContainer) oldTracksContainer.remove();
+
+    // Creează container nou
+    let tracksContainer = document.createElement('div');
+    tracksContainer.id = tracksContainerId;
+    tracksContainer.style.marginTop = '32px';
+    tracksContainer.style.marginBottom = '32px';
+    // Inserează în library-view
+    libraryView.appendChild(tracksContainer);
+
+    // Adaugă buton de revenire
+    const backBtn = document.createElement('button');
+    backBtn.textContent = 'Înapoi la playlisturi';
+    backBtn.className = 'control-btn';
+    backBtn.style.marginBottom = '24px';
+    backBtn.onclick = function() {
+        tracksContainer.remove();
+        if (playlistsGrid) playlistsGrid.style.display = '';
+    };
+    tracksContainer.appendChild(backBtn);
+
+    tracksContainer.innerHTML += `<div class="empty-state"><span class="empty-text">Loading tracks...</span></div>`;
+    try {
+        const response = await fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+        console.log('Spotify tracks response:', response);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('Spotify tracks data:', data);
+        if (!data.items || data.items.length === 0) {
+            tracksContainer.innerHTML += `<div class="empty-state"><span class="empty-text">No tracks found in this playlist.</span></div>`;
+            return;
+        }
+        // Șterge loading
+        tracksContainer.innerHTML = '';
+        tracksContainer.appendChild(backBtn);
+        const title = document.createElement('h2');
+        title.style.marginBottom = '16px';
+        title.textContent = `${playlist.name} - Tracks`;
+        tracksContainer.appendChild(title);
+
+        // Stil container listă
+        const listDiv = document.createElement('div');
+        listDiv.style.display = 'flex';
+        listDiv.style.flexDirection = 'column';
+        listDiv.style.gap = '12px';
+        tracksContainer.appendChild(listDiv);
+
+        data.items.forEach((item, idx) => {
+            const track = item.track;
+            // Format durată mm:ss
+            const ms = track.duration_ms;
+            const min = Math.floor(ms / 60000);
+            const sec = ((ms % 60000) / 1000).toFixed(0).padStart(2, '0');
+            const duration = `${min}:${sec}`;
+            // Card melodie
+            const trackDiv = document.createElement('div');
+            trackDiv.className = 'playlist-track pretty-track';
+            trackDiv.style.display = 'flex';
+            trackDiv.style.alignItems = 'center';
+            trackDiv.style.background = 'var(--concrete-light)';
+            trackDiv.style.borderRadius = '12px';
+            trackDiv.style.padding = '10px 18px';
+            trackDiv.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+            trackDiv.style.transition = 'background 0.2s, box-shadow 0.2s';
+            trackDiv.style.position = 'relative';
+            trackDiv.style.cursor = 'pointer';
+            trackDiv.onmouseenter = () => {
+                playIcon.style.opacity = '1';
+                trackDiv.style.background = 'var(--warm-brown)';
+            };
+            trackDiv.onmouseleave = () => {
+                playIcon.style.opacity = '0';
+                trackDiv.style.background = 'var(--concrete-light)';
+            };
+
+            // Număr ordine
+            const nr = document.createElement('span');
+            nr.textContent = idx + 1;
+            nr.style.fontFamily = 'var(--font-mono)';
+            nr.style.fontWeight = '700';
+            nr.style.fontSize = '18px';
+            nr.style.width = '32px';
+            nr.style.color = 'var(--amber-warm)';
+            nr.style.textAlign = 'right';
+            trackDiv.appendChild(nr);
+
+            // Copertă
+            const img = document.createElement('img');
+            img.src = track.album.images && track.album.images.length > 0 ? track.album.images[0].url : 'src/logo.png';
+            img.alt = track.name;
+            img.style.width = '48px';
+            img.style.height = '48px';
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = '8px';
+            img.style.margin = '0 18px';
+            img.style.border = '1px solid var(--warm-brown)';
+            trackDiv.appendChild(img);
+
+            // Info melodie
+            const infoDiv = document.createElement('div');
+            infoDiv.style.flex = '1';
+            infoDiv.style.display = 'flex';
+            infoDiv.style.flexDirection = 'column';
+            infoDiv.style.justifyContent = 'center';
+            // Titlu
+            const title = document.createElement('div');
+            title.textContent = track.name;
+            title.style.fontFamily = 'var(--font-mono)';
+            title.style.fontWeight = '700';
+            title.style.fontSize = '18px';
+            title.style.color = 'var(--text-primary)';
+            infoDiv.appendChild(title);
+            // Artist
+            const artist = document.createElement('div');
+            artist.textContent = track.artists.map(a => a.name).join(', ');
+            artist.style.fontFamily = 'var(--font-mono)';
+            artist.style.fontSize = '13px';
+            artist.style.color = 'var(--text-secondary)';
+            artist.style.marginTop = '2px';
+            infoDiv.appendChild(artist);
+            trackDiv.appendChild(infoDiv);
+
+            // Durată
+            const dur = document.createElement('span');
+            dur.textContent = duration;
+            dur.style.fontFamily = 'var(--font-mono)';
+            dur.style.fontSize = '15px';
+            dur.style.color = 'var(--amber-warm)';
+            dur.style.marginLeft = '18px';
+            dur.style.minWidth = '40px';
+            dur.style.textAlign = 'right';
+            trackDiv.appendChild(dur);
+
+            // Iconiță play (hover)
+            const playIcon = document.createElement('span');
+            playIcon.innerHTML = '<i class="fas fa-play"></i>';
+            playIcon.style.position = 'absolute';
+            playIcon.style.right = '18px';
+            playIcon.style.top = '50%';
+            playIcon.style.transform = 'translateY(-50%)';
+            playIcon.style.color = 'var(--amber-warm)';
+            playIcon.style.fontSize = '20px';
+            playIcon.style.opacity = '0';
+            playIcon.style.transition = 'opacity 0.2s';
+            trackDiv.appendChild(playIcon);
+
+            listDiv.appendChild(trackDiv);
+        });
+    } catch (error) {
+        tracksContainer.innerHTML += `<div class="empty-state"><span class="empty-text">Failed to load tracks.</span></div>`;
+        console.error('Error loading playlist tracks:', error);
+    }
 }
 
 // ===== ANALYTICS FUNCTIONS =====
@@ -690,4 +864,4 @@ if (document.readyState === 'loading') {
 }
 
 console.log('🎛️ Audio Studio Interface Loaded');
-console.log('🎵 Professional listening experience ready');
+console.log('🎵 Professional listening experience ready');console.log("showPlaylistTracks called", playlist);

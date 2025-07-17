@@ -270,17 +270,20 @@ function initiateAuth() {
 
 async function exchangeCodeForToken(code) {
     try {
+        const client_id = 'f9fa57a16b964585981ff4bffd1fb46f';
+        const client_secret = 'e3f8bafe338a4a51aea1ada4670117d3';
+        const redirect_uri = 'http://localhost:5173'; // asigură-te că e identic cu cel din dashboard Spotify
+        const basic = btoa(`${client_id}:${client_secret}`);
         const response = await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': `Basic ${basic}`
             },
             body: new URLSearchParams({
                 grant_type: 'authorization_code',
                 code: code,
-                redirect_uri: 'http://localhost:5173', // la fel ca la initiateAuth
-                client_id: 'f9fa57a16b964585981ff4bffd1fb46f', // la fel ca la initiateAuth
-                client_secret: 'f79b11c90dd746fb98e73e8d5c3dfaa9'
+                redirect_uri: redirect_uri
             })
         });
         
@@ -289,12 +292,13 @@ async function exchangeCodeForToken(code) {
         if (data.access_token) {
             accessToken = data.access_token;
             localStorage.setItem('spotify_access_token', accessToken);
-            
             // Clean up URL
             window.history.replaceState({}, document.title, window.location.pathname);
-            
             console.log('✅ Authentication successful');
             getCurrentUser();
+        } else {
+            showError('Authentication failed. Please try again.');
+            console.error('❌ Authentication failed:', data);
         }
     } catch (error) {
         console.error('❌ Authentication failed:', error);
